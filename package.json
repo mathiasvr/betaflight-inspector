@@ -1,0 +1,51 @@
+{
+  "name": "betaflight-inspector",
+  "version": "0.0.1",
+  "description": "A GUI for the Betaflight CLI",
+  "keywords": [
+    "betaflight",
+    "configuration",
+    "inspect"
+  ],
+  "homepage": "https://github.com/mathiasvr/betaflight-inspector#readme",
+  "bugs": {
+    "url": "https://github.com/mathiasvr/betaflight-inspector/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathiasvr/betaflight-inspector.git"
+  },
+  "license": "MIT",
+  "author": "Mathias Rasmussen <mathiasvr@gmail.com>",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "install": "electron-rebuild",
+    "lint": "eslint \"*/**/*.{js,svelte}\"",
+    "start": "electron .",
+    "test": "npm run lint"
+  },
+  "dependencies": {
+    "serialport": "^8.0.7",
+    "usb": "^1.6.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "electron": "^8.0.1",
+    "electron-rebuild": "^1.10.0",
+    "electron-reload": "^1.5.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-svelte3": "^2.7.3",
+    "rollup": "^1.20.0",
+    "rollup-plugin-svelte": "^5.1.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "svelte": "^3.19.1"
+  }
+}
