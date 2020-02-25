@@ -2,14 +2,10 @@
   import ConnectView from './ConnectView.svelte'
   import VariableTable from './components/VariableTable.svelte'
 
-  let conf = null
+  let variables = null
 
-  window.ipc.on('received-bf-configuration', (event, bfconf) => {
-    // TODO: Display/merge all data
-    const variables = bfconf.dump.master.variables
-  
-    conf = Object.entries(variables)
-    console.log('conf', conf)
+  window.ipc.on('received-bf-configuration', (event, bfvars) => {
+    variables = Object.entries(bfvars)
   })
 </script>
 
@@ -17,8 +13,8 @@
   <h1>Connect Flight Controller</h1>
   <ConnectView />
 
-  {#if conf}
+  {#if variables}
   <h1>Variables</h1>
-  <VariableTable variables={conf} />
+  <VariableTable {variables} />
   {/if}
 </div>

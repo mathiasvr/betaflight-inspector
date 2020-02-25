@@ -22,15 +22,17 @@ function connectToSerialPort (portPath, evt) { // TODO: don't pass evt
     })
   }
 
-  // TODO: fix timeout, check stage?
+  // TODO: notify renderer of timeout
   setTimeout(() => {
-    if (port.isOpen) {
+    if (port.isOpen && stage === 0) {
       // might not be valid, but send exit just in case
       console.log('serial port, timed out...')
       portWriteAndCheck('exit\n')
       port.close()
+    } else {
+      // TODO: maybe timeout if we cannot finish?
     }
-  }, 5000)
+  }, 1000)
 
   // todo: do we need this / does it throw other errors (not already handled)
   // Open errors will be emitted as an error event
@@ -117,14 +119,25 @@ function connectToSerialPort (portPath, evt) { // TODO: don't pass evt
 
 async function processData (info, evt) {
   // TODO: possible exceptions all over the place
-  const diff = parseDump(info.diff)
-  // console.log('Diff:', diff)
-
-  const dump = parseDump(info.default_dump)
-  // console.log('Dump:', dump)
-
+  let diff = parseDump(info.diff)
+  let dump = parseDump(info.default_dump)
   const get = parseGet(info.get_vars)
-  // console.log('Get:', get)
 
-  evt.reply('received-bf-configuration', { diff, dump, get })
+  // TODO: currently only working on master variables
+  diff = diff.master.variables
+  dump = dump.master.variables
+
+  // TODO: assert key sync between parses
+  const bfconf = {}
+
+  for (const key of Object.keys(dump)) {
+    if (dump[key] !== get[key].default) {
+      console.warn(`Inconsistent default key: ${key} (${dump[key]} vs ${get[key].default})`)
+    }
+
+    // TODO: default present in two places
+    bfconf[key] = { value: diff[key] || dump[key], default: dump[key], ...get[key] }
+  }
+
+  evt.reply('received-bf-configuration', bfconf)
 }

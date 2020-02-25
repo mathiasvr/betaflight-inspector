@@ -20,7 +20,9 @@ function parseGet (txt) {
 
       variablesInfo[name] = {}
 
-      if (value !== '-') { variablesInfo[name].default = value }
+      // if (value !== '-') {
+      variablesInfo[name].default = value
+      // }
 
       i += 1
 
