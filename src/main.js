@@ -6,6 +6,8 @@ const { setupHandlers } = require('./main/handlers')
 
 const DEBUG = process.env.DEBUG
 
+const config = { mainWindow: null }
+
 if (DEBUG) {
   require('electron-reload')(__dirname, {
     electron: path.join(process.cwd(), 'node_modules', '.bin', 'electron'),
@@ -15,22 +17,19 @@ if (DEBUG) {
 
 function createWindow () {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  const win = config.mainWindow = new BrowserWindow({
     width: DEBUG ? 1100 : 800,
     height: 600,
-    webPreferences: {
+    webPreferences: { 
       preload: path.join(__dirname, 'preload.js')
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('public/index.html')
+  win.loadFile('public/index.html')
 
   // Open the Developer Tools in debug mode
-  if (DEBUG) mainWindow.webContents.openDevTools()
-
-  // Setup handlers for serial and IPC communication
-  setupHandlers(mainWindow)
+  if (DEBUG) win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -50,3 +49,6 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
+
+// Setup handlers for serial and IPC communication
+setupHandlers(config)

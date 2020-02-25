@@ -7,7 +7,7 @@ const usb = require('usb')
 const { connectToSerialPort } = require('./serial')
 
 module.exports.setupHandlers =
-function (mainWindow) {
+function (config) {
   ipc.on('connect-serial-scrape-info', (event, arg) => {
     console.log('ipc arg', arg)
 
@@ -20,7 +20,7 @@ function (mainWindow) {
 
   const listSerialPorts = async () => {
     const res = await SerialPort.list()
-    if (mainWindow) mainWindow.webContents.send('serial-ports-updated', res)
+    if (config.mainWindow) config.mainWindow.webContents.send('serial-ports-updated', res)
   }
 
   usb.on('attach', () => {
