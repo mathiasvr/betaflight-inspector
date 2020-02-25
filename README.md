@@ -15,3 +15,6 @@ $ npm start
 ```shell
 $ npm run dev
 ```
+
+## Related
+Betaflight documentation at https://github.com/mathiasvr/betaflight-deciphered.
