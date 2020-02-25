@@ -16,7 +16,7 @@ function connectToSerialPort (portPath, evt) { // TODO: don't pass evt
     })
 
   const portWriteAndCheck = (data) => {
-    port.write(data, function (err) {
+    port.write(data, (err) => {
       if (err) return console.log('Error on write: ', err.message)
       console.log('Message written:', data)
     })

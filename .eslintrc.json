@@ -22,6 +22,7 @@
     }
   ],
   "rules": {
+    "prefer-arrow-callback": "error",
     "no-unused-vars": "warn",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 2, "maxEOF": 0 }],
     "camelcase": "warn"
