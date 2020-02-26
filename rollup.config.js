@@ -9,7 +9,7 @@ export default {
   input: 'src/renderer/App.js',
   output: {
     name: 'BetaflightInspector',
-    file: 'public/build/bundle.js',
+    file: 'static/build/bundle.js',
     format: 'iife',
     sourcemap: true
   },
@@ -20,7 +20,7 @@ export default {
       // we'll extract any component CSS out into
       // a separate file - better for performance
       css: css => {
-        css.write('public/build/bundle.css')
+        css.write('static/build/bundle.css')
       }
     }),
     // If you have external dependencies installed from

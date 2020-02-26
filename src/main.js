@@ -26,7 +26,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  win.loadFile('public/index.html')
+  win.loadFile('static/index.html')
 
   // Open the Developer Tools in debug mode
   if (DEBUG) win.webContents.openDevTools()
