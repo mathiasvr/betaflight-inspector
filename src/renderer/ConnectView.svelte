@@ -25,6 +25,7 @@
 </script>
 
 <div>
+  <h1>Connect Flight Controller</h1>
 
   <form class="form-inline my-4">
     <label class="mr-sm-2" for="connectSelectOption">Serial port</label>
