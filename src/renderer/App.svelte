@@ -2,10 +2,15 @@
   import ConnectView from './ConnectView.svelte'
   import VariableTable from './components/VariableTable.svelte'
 
-  let variables = null
+  let masterVariables = null
+  let profileVariables = null
+  let rateVariables = null
 
   window.ipc.on('received-bf-configuration', (event, bfvars) => {
-    variables = Object.entries(bfvars)
+    masterVariables = Object.entries(bfvars.masterVars)
+    // TODO: allow switching (currently just profile/rate 0)
+    profileVariables = Object.entries(bfvars.profilesVars[0])
+    rateVariables = Object.entries(bfvars.rateProfilesVars[0])
   })
 </script>
 
@@ -13,8 +18,13 @@
   <h1>Connect Flight Controller</h1>
   <ConnectView />
 
-  {#if variables}
+  {#if masterVariables}
   <h1>Variables</h1>
-  <VariableTable {variables} />
+  <h2>Master Variables</h2>
+  <VariableTable variables={masterVariables} />
+  <h2>Profile Variables</h2>
+  <VariableTable variables={profileVariables} />
+  <h2>Rate Profile Variables</h2>
+  <VariableTable variables={rateVariables} />
   {/if}
 </div>

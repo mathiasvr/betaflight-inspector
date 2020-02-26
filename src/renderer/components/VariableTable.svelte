@@ -8,7 +8,3 @@
 {#each variables as varData}
   <VariableRow key={varData[0]} data={varData[1]} />
 {/each}
-
-<style>
-
-</style>

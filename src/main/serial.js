@@ -119,25 +119,39 @@ function connectToSerialPort (portPath, evt) { // TODO: don't pass evt
 
 async function processData (info, evt) {
   // TODO: possible exceptions all over the place
-  let diff = parseDump(info.diff)
-  let dump = parseDump(info.default_dump)
+  const diff = parseDump(info.diff)
+  const defaults = parseDump(info.default_dump)
   const get = parseGet(info.get_vars)
 
-  // TODO: currently only working on master variables
-  diff = diff.master.variables
-  dump = dump.master.variables
+  // TODO: currently only working with variables
+  const masterVars = mergeVariableProperties(diff.master.variables, defaults.master.variables, get)
 
+  const profilesVars = []
+  for (let i = 0; i < diff.profiles_vars.length; i++) {
+    profilesVars[i] = mergeVariableProperties(diff.profiles_vars[i], defaults.profiles_vars[i], get)
+  }
+
+  const rateProfilesVars = []
+  for (let i = 0; i < diff.rateprofiles_vars.length; i++) {
+    rateProfilesVars[i] = mergeVariableProperties(diff.rateprofiles_vars[i], defaults.rateprofiles_vars[i], get)
+  }
+
+  const cliVars = { masterVars, profilesVars, rateProfilesVars }
+
+  evt.reply('received-bf-configuration', cliVars)
+}
+
+function mergeVariableProperties (values, defaults, ranges) {
   // TODO: assert key sync between parses
-  const bfconf = {}
-
-  for (const key of Object.keys(dump)) {
-    if (dump[key] !== get[key].default) {
-      console.warn(`Inconsistent default key: ${key} (${dump[key]} vs ${get[key].default})`)
+  const vars = {}
+  for (const key of Object.keys(defaults)) {
+    if (defaults[key] !== ranges[key].default) {
+      console.warn(`Inconsistent default key: ${key} (${defaults[key]} vs ${ranges[key].default})`)
     }
 
     // TODO: default present in two places
-    bfconf[key] = { value: diff[key] || dump[key], default: dump[key], ...get[key] }
+    vars[key] = { value: values[key] || defaults[key], default: defaults[key], ...ranges[key] }
   }
 
-  evt.reply('received-bf-configuration', bfconf)
+  return vars
 }
