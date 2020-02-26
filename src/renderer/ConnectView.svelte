@@ -16,6 +16,7 @@
     window.ipc.send('connect-serial-scrape-info', portPath)
   }
 
+  // TODO: should this be moved to App?
   window.ipc.on('serial-ports-updated', (event, ports) => {
     portPaths = ports.map(p => p.path)
   })
@@ -28,10 +29,10 @@
   <h1>Connect Flight Controller</h1>
 
   <form class="form-inline my-4">
-    <label class="mr-sm-2" for="connectSelectOption">Serial port</label>
+    <label class="mr-sm-2" for="selectPort">Serial port</label>
     <select
       class="custom-select mr-sm-2"
-      id="selectPortElement"
+      id="selectPort"
       size="3"
       bind:value={selectedPortPath_does_not_work}>
       {#each portPaths as port, i}
