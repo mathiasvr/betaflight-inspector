@@ -5,7 +5,7 @@
   //       https://github.com/sveltejs/svelte/issues/1764
   let selectedPortPath_does_not_work
   const selectedPortPath = () =>
-    document.getElementById('selectPortElement').value
+    document.getElementById('selectPort').value
 
   function handleClick (event) {
     const portPath = selectedPortPath()

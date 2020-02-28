@@ -24,7 +24,8 @@
     "install": "electron-rebuild",
     "lint": "eslint \"*/**/*.{js,svelte}\"",
     "start": "electron .",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "update-bf-docs": "curl -s https://raw.githubusercontent.com/mathiasvr/betaflight-deciphered/master/help_variables.json > src/doc-vars.json"
   },
   "dependencies": {
     "serialport": "^8.0.7",

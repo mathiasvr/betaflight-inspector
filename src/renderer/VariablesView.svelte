@@ -12,9 +12,9 @@
   let selectedRateProfile = rateprofiles[0]
 
   // todo: update on change in app?
-  const masterVariables = Object.entries(bfvariables.masterVars)
-  $: profileVariables = Object.entries(bfvariables.profilesVars[selectedProfile - 1])
-  $: rateVariables = Object.entries(bfvariables.rateProfilesVars[selectedRateProfile - 1])
+  const masterVariables = bfvariables.masterVars
+  $: profileVariables = bfvariables.profilesVars[selectedProfile - 1]
+  $: rateVariables = bfvariables.rateProfilesVars[selectedRateProfile - 1]
 </script>
 
 <div>

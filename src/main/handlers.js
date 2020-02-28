@@ -8,10 +8,16 @@ const { connectToSerialPort } = require('./serial')
 
 module.exports.setupHandlers =
 function (config) {
+  // TODO: move this
+  // read variable documentation file
+  const fs = require('fs')
+  const raw = fs.readFileSync('src/doc-vars.json')
+  const docs = JSON.parse(raw)
+
   ipc.on('connect-serial-scrape-info', (event, arg) => {
     console.log('ipc arg', arg)
 
-    connectToSerialPort(arg, event)
+    connectToSerialPort(arg, event, docs)
   })
 
   ipc.on('list-serial-ports', (event) => {
