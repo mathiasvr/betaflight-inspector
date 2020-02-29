@@ -21,10 +21,11 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "install": "electron-rebuild",
+    "install": "electron-rebuild && npm run copy-vendor-res",
     "lint": "eslint \"*/**/*.{js,svelte}\"",
     "start": "electron .",
     "test": "npm run lint",
+    "copy-vendor-res": "mkdir static/vendor; cp node_modules/bootstrap/dist/*/bootstrap.min.{css,js} static/vendor/ && cp node_modules/jquery/dist/jquery.slim.min.js static/vendor/",
     "update-bf-docs": "curl -s https://raw.githubusercontent.com/mathiasvr/betaflight-deciphered/master/help_variables.json > src/doc-vars.json"
   },
   "dependencies": {
@@ -32,6 +33,8 @@
     "usb": "^1.6.2"
   },
   "devDependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
     "@rollup/plugin-commonjs": "^11.0.0",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "electron": "^8.0.2",
