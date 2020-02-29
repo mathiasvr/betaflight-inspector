@@ -22,17 +22,18 @@ function connectToSerialPort (portPath, evt, docs) { // TODO: don't pass evt and
     })
   }
 
-  // TODO: notify renderer of timeout
-  setTimeout(() => {
-    if (port.isOpen && stage === 0) {
-      // might not be valid, but send exit just in case
+  const exitAndClose = () => {
+    if (port.isOpen) {
       console.log('serial port, timed out...')
+      // might not be valid, but send exit just in case
       portWriteAndCheck('exit\n')
       port.close()
-    } else {
-      // TODO: maybe timeout if we cannot finish?
     }
-  }, 1000)
+  }
+
+  // TODO: notify renderer of timeout
+  setTimeout(() => stage === 0 && exitAndClose(), 1000)
+  setTimeout(() => exitAndClose(), 5000)
 
   // todo: do we need this / does it throw other errors (not already handled)
   // Open errors will be emitted as an error event
@@ -42,7 +43,7 @@ function connectToSerialPort (portPath, evt, docs) { // TODO: don't pass evt and
   // });
 
   // NOTE: This removes empty entries (lines)
-  const parser = port.pipe(new Readline({ delimiter: '\r\n', includeDelimiter: false }))
+  const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
 
   let stage = 0
 
