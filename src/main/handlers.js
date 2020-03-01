@@ -5,19 +5,20 @@ const SerialPort = require('serialport')
 const usb = require('usb')
 
 const { connectToSerialPort } = require('./serial')
+const { annotateWithVariableDocumentation } = require('./variable-documentation')
 
 module.exports.setupHandlers =
 function (config) {
-  // TODO: move this
-  // read variable documentation file
-  const fs = require('fs')
-  const raw = fs.readFileSync('src/doc-vars.json')
-  const docs = JSON.parse(raw)
-
-  ipc.on('connect-serial-scrape-info', (event, arg) => {
+  ipc.on('connect-serial-scrape-info', async (event, arg) => {
     console.log('ipc arg', arg)
 
-    connectToSerialPort(arg, event, docs)
+    connectToSerialPort(arg)
+      .then(vars => {
+        const cliVars = annotateWithVariableDocumentation(vars)
+        event.reply('received-bf-configuration', cliVars)
+      })
+      // TODO: better error handling
+      .catch(err => console.error('Error:', err.message))
   })
 
   ipc.on('list-serial-ports', (event) => {
