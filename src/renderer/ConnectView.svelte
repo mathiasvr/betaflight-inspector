@@ -1,5 +1,5 @@
 <script>
-  let portPaths = []
+  export let portPaths
 
   // HACK: Svelte binding doesn't work when updating select options.
   //       https://github.com/sveltejs/svelte/issues/1764
@@ -15,11 +15,6 @@
     // Request connecting to serial port
     window.ipc.send('connect-serial-scrape-info', portPath)
   }
-
-  // TODO: should this be moved to App?
-  window.ipc.on('serial-ports-updated', (event, ports) => {
-    portPaths = ports.map(p => p.path)
-  })
 
   // TODO: establish IPC naming convention
   window.ipc.send('list-serial-ports')

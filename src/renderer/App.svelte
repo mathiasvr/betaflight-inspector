@@ -4,18 +4,19 @@
 
   import SvgQuestion from 'bootstrap-icons/icons/question-square-fill.svg'
 
-  let bfvariables
+  let portPaths = []
+  let bfvariables = null
 
-  window.ipc.on('received-bf-configuration', (event, bfvars) => {
-    bfvariables = bfvars
-  })
+  window.ipc
+    .on('received-bf-configuration', (event, bfvars) => { bfvariables = bfvars })
+    .on('serial-ports-updated', (event, ports) => { portPaths = ports.map(p => p.path) })
 </script>
 
 <div class="container">
   {#if bfvariables}
     <VariablesView {bfvariables} />
   {:else}
-    <ConnectView />
+    <ConnectView {portPaths} />
 
     <a href="#todo">
     <svg class="bi bi-question-square-fill" width="2em" height="2em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
