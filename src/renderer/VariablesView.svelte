@@ -1,17 +1,18 @@
 <script>
   import VariableTable from './components/VariableTable.svelte'
 
-  // todo: get active prof and rateprof
   export let bfvariables
+  const activeProfile = bfvariables.activeProfile
+  const activeRateProfile = bfvariables.activeRateProfile
 
-  // todo: get from bf
+  // TODO: get from bf
   const profiles = [1, 2, 3]
   const rateprofiles = [1, 2, 3, 4, 5, 6]
   
-  let selectedProfile = profiles[0]
-  let selectedRateProfile = rateprofiles[0]
+  let selectedProfile = profiles[activeProfile]
+  let selectedRateProfile = rateprofiles[activeRateProfile]
 
-  // todo: update on change in app?
+  // TODO: update on change in app?
   const masterVariables = bfvariables.masterVars
   $: profileVariables = bfvariables.profilesVars[selectedProfile - 1]
   $: rateVariables = bfvariables.rateProfilesVars[selectedRateProfile - 1]

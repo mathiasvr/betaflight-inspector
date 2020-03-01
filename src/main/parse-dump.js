@@ -75,5 +75,5 @@ module.exports.parseDump =
 
     master.active_profile = active_prof
     master.active_rateprofile = active_rateprof
-    return { master, profiles_vars, rateprofiles_vars }
+    return { master, profiles_vars, rateprofiles_vars, active_prof, active_rateprof }
   }

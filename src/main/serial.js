@@ -153,7 +153,13 @@ async function processData (info) {
     rateProfilesVars[i] = mergeVariableProperties(diff.rateprofiles_vars[i], defaults.rateprofiles_vars[i], get)
   }
 
-  const cliVars = { masterVars, profilesVars, rateProfilesVars }
+  const cliVars = {
+    masterVars,
+    profilesVars,
+    rateProfilesVars,
+    activeProfile: diff.active_prof,
+    activeRateProfile: diff.active_rateprof
+  }
 
   return cliVars
 }
