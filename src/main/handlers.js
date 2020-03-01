@@ -7,8 +7,7 @@ const usb = require('usb')
 const { connectToSerialPort } = require('./serial')
 const { annotateWithVariableDocumentation } = require('./variable-documentation')
 
-module.exports.setupHandlers =
-function (config) {
+exports.setupHandlers = function (config) {
   ipc.on('connect-serial-scrape-info', async (event, arg) => {
     console.log('ipc arg', arg)
 

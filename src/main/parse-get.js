@@ -2,9 +2,7 @@
 // TODO: this is a quick translation of Python code,
 //       relies on many assumptions and needs rewrite
 
-// export async
-module.exports.parseGet =
-function parseGet (txt) {
+exports.parseGet = function (txt) {
   let lines = txt.split('\n')
 
   lines = lines.filter(l => l !== '')

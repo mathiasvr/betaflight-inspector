@@ -6,8 +6,7 @@ const { parseDump } = require('./parse-dump')
 
 const assert = require('assert')
 
-module.exports.connectToSerialPort =
-function connectToSerialPort (portPath) {
+exports.connectToSerialPort = function (portPath) {
   return new Promise((resolve, reject) => {
     const port = new SerialPort(
       portPath, { baudRate: 115200 }

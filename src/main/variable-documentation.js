@@ -4,7 +4,7 @@ const path = require('path')
 // TODO: async? or just import
 const docs = JSON.parse(fs.readFileSync(path.join(__dirname, '../doc-vars.json')))
 
-module.exports.annotateWithVariableDocumentation = function (vars) {
+exports.annotateWithVariableDocumentation = function (vars) {
   /// TODO: don't do this here -------------------
   // add documentation properties to variables
   for (const key of Object.keys(vars)) {
