@@ -2,7 +2,6 @@
 const docs = require('../doc-vars.json')
 
 exports.annotateWithVariableDocumentation = function (vars) {
-  /// TODO: don't do this here -------------------
   // add documentation properties to variables
   for (const key of Object.keys(vars)) {
     if (docs[key]) {
