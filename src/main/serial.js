@@ -70,10 +70,18 @@ function connectToSerialPort (portPath, evt, docs) { // TODO: don't pass evt and
         }
         break
       case 2:
-        info.version = line
-        // TODO: check version before proceeding
-        stage++
-        portWriteAndCheck('diff all\n')
+        info.versionString = line
+        var m = line.match(/# Betaflight.+?(\d\.\d\.\d)/)
+        if (m) info.versionNumber = m[1]
+
+        if (m && info.versionNumber.substring(0, 3) === '4.1') {
+          stage++
+          portWriteAndCheck('diff all\n')
+        } else {
+          console.warn('Unsupported Betaflight version:', info.versionString)
+          stage = -1
+          // TODO: decide how to handle close
+        }
         break
       case 3:
         if (line === '# diff all') {
