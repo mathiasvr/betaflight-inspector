@@ -1,8 +1,5 @@
-const fs = require('fs')
-const path = require('path')
 // read variable documentation file
-// TODO: async? or just import
-const docs = JSON.parse(fs.readFileSync(path.join(__dirname, '../doc-vars.json')))
+const docs = require('../doc-vars.json')
 
 exports.annotateWithVariableDocumentation = function (vars) {
   /// TODO: don't do this here -------------------
