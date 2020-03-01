@@ -2,6 +2,7 @@ import svelte from 'rollup-plugin-svelte'
 import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
+import svg from 'rollup-plugin-svg'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -33,6 +34,8 @@ export default {
       dedupe: ['svelte']
     }),
     commonjs(),
+
+    svg(),
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
