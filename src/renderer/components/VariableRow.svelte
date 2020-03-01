@@ -28,7 +28,6 @@
       </select>
       {/if}
     {:else}
-    <!-- TODO: use data.value thing instead of default (also assume/assert no default in this chain) -->
     <!-- TODO: clean up '-' values to empty string -->
     <!-- TODO: add placeholder="RATE_1", etc.-->
     <input id="{key}__opt" type="text" value="{data.value}"/>

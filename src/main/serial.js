@@ -4,6 +4,8 @@ const Readline = require('@serialport/parser-readline')
 const { parseGet } = require('./parse-get')
 const { parseDump } = require('./parse-dump')
 
+const assert = require('assert')
+
 module.exports.connectToSerialPort =
 function connectToSerialPort (portPath) {
   return new Promise((resolve, reject) => {
@@ -119,8 +121,7 @@ function connectToSerialPort (portPath) {
             stage++
             portWriteAndCheck('exit\n')
             port.close()
-            var cliVars = processData(info)
-            resolve(cliVars)
+            processData(info).then(resolve).catch(reject)
           } else {
             info.get_vars += line + '\n'
           }
@@ -135,6 +136,9 @@ async function processData (info) {
   const diff = parseDump(info.diff)
   const defaults = parseDump(info.default_dump)
   const get = parseGet(info.get_vars)
+
+  // TODO: handle this, probably just check each get key (even though it may never happen)
+  assert.deepStrictEqual(Object.keys(defaults), Object.keys(get))
 
   // TODO: currently only working with variables
   const masterVars = mergeVariableProperties(diff.master.variables, defaults.master.variables, get)
@@ -155,7 +159,6 @@ async function processData (info) {
 }
 
 function mergeVariableProperties (values, defaults, ranges) {
-  // TODO: assert key sync between parses
   const vars = {}
   for (const key of Object.keys(defaults)) {
     if (defaults[key] !== ranges[key].default) {
