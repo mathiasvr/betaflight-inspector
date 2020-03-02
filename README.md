@@ -4,6 +4,8 @@ A GUI for the Betaflight CLI.
 
 Early stages of development. 
 
+![Screenshot](screenshot.png)
+
 ## Build
 ```shell
 $ npm install
