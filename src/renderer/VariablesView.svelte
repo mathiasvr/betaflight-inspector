@@ -12,6 +12,8 @@
   let selectedProfile = profiles[activeProfile]
   let selectedRateProfile = rateprofiles[activeRateProfile]
 
+  let showDefaults = true
+
   // TODO: update on change in app?
   const masterVariables = bfvariables.masterVars
   $: profileVariables = bfvariables.profilesVars[selectedProfile - 1]
@@ -21,8 +23,13 @@
 <div>
   <h1>Variables</h1>
 
+  <div class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="switchDiffOnly" bind:checked={showDefaults}>
+    <label class="custom-control-label" for="switchDiffOnly">Show default settings</label>
+  </div>
+
   <h2>Master Variables</h2>
-  <VariableTable variables={masterVariables} />
+  <VariableTable variables={masterVariables} {showDefaults} />
 
   <h2>Profile Variables</h2>
   <form class="form-inline my-4">
@@ -33,7 +40,7 @@
       {/each}
     </select>
   </form>
-  <VariableTable variables={profileVariables} />
+  <VariableTable variables={profileVariables} {showDefaults} />
 
   <h2>Rate Profile Variables</h2>
   <form class="form-inline my-4">
@@ -44,5 +51,5 @@
       {/each}
     </select>
   </form>
-  <VariableTable variables={rateVariables} />
+  <VariableTable variables={rateVariables} {showDefaults} />
 </div>

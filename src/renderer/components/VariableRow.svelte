@@ -54,11 +54,14 @@
 </div>
 
 <style>
+  .row.nondefault {
+    background-color: #b5ffd4;
+  }
   .row:nth-child(odd) {
     background-color: #f4f4f4;
   }
-  .row.nondefault {
-    background-color: #b5ffd4;
+  .row:nth-child(odd).nondefault {
+    background-color: #7ff7b1;
   }
   .description {
     display: none;
