@@ -22,13 +22,13 @@
 
 <div>
   <h1>Variables</h1>
-
   <div class="custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="switchDiffOnly" bind:checked={showDefaults}>
     <label class="custom-control-label" for="switchDiffOnly">Show default settings</label>
   </div>
 
-  <h2>Master Variables</h2>
+  <!-- TODO: avoid margin hack? -->
+  <h2 class="mt-3" >Master Variables</h2>
   <VariableTable variables={masterVariables} {showDefaults} />
 
   <h2>Profile Variables</h2>

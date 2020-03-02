@@ -8,22 +8,30 @@
 
 <!-- TODO: fix types for comparison  -->
 <div class="row {data.value.toString() !== data.default.toString() ? 'nondefault' : ''}">
-  <div class="col-3 my-1 text-monospace text-break">{data.name}</div>
+  <div class="col-4 my-1 text-monospace text-break">{data.name}</div>
   
   <div class="col my-1">
     {#if data.range}
       {#if Math.abs(data.range[1] - data.range[0]) <= 10000}
-      <input id="{key}__opt" type="range" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
+      <input class="custom-range" id="{key}__opt" type="range" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
       {/if}
         <!--output id="{key}__displ">{data.value}</output-->
-      <input type="number" id="{key}__displ2" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
-      {#if data.unit}<i>{data.unit}</i>{/if}
+      <div class="form-row align-items-center">
+        <div class="col">
+          <input class="form-control" type="number" id="{key}__displ2" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
+        </div>
+        {#if data.unit}<i>{data.unit}</i>{/if}
+  </div>
     {:else if data.allowed}
       <!-- TODO: make this type boolean before-hand for easier binding? -->
       {#if data.allowed.length === 2 && data.allowed.includes('ON') && data.allowed.includes('OFF')}
-      <input id="{key}__opt" type="checkbox" checked={data.value === 'ON'} on:change={data.value = this.checked ? 'ON' : 'OFF' } />
+      <div class="custom-control custom-switch">
+        <input class="custom-control-input" id="{key}__opt" type="checkbox" checked={data.value === 'ON'} on:change={data.value = this.checked ? 'ON' : 'OFF' } />
+        <!-- TODO: why is label needed? -->
+        <label class="custom-control-label" for="{key}__opt"></label>
+      </div>
       {:else}
-      <select id="{key}__opt" bind:value={data.value}>
+      <select class="custom-select custom-select-sm" id="{key}__opt" bind:value={data.value}>
         {#each data.allowed as option}
         <option value={option}>{option}</option>
         {/each}
@@ -32,7 +40,7 @@
     {:else}
     <!-- TODO: clean up '-' values to empty string -->
     <!-- TODO: add placeholder="RATE_1", etc.-->
-    <input id="{key}__opt" type="text" bind:value={data.value} />
+    <input class="form-control" id="{key}__opt" type="text" bind:value={data.value} />
     {/if}
   </div>
   
