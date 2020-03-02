@@ -3,6 +3,7 @@ import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import svg from 'rollup-plugin-svg'
+import json from '@rollup/plugin-json'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -36,6 +37,7 @@ export default {
     commonjs(),
 
     svg(),
+    json(), // TODO: may not need this in production
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
