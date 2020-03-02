@@ -1,7 +1,3 @@
-// TODO: handle/manage errors
-// TODO: this is a quick translation of Python code,
-//       relies on many assumptions and needs rewrite
-
 exports.parseGet = function (txt) {
   let lines = txt.split('\n')
 
@@ -9,57 +5,50 @@ exports.parseGet = function (txt) {
 
   const variablesInfo = {}
 
-  let i = 0
-  while (i < lines.length) {
-    let matches = /(.+) = (.+)/.exec(lines[i])
-
-    if (matches) {
-      const [, name, value] = matches
-
-      variablesInfo[name] = {}
-
-      // if (value !== '-') {
-      variablesInfo[name].default = value
-      // }
-
-      i += 1
-
-      let section = 'master'
-      if (lines[i].startsWith('profile')) {
-        section = 'profile'
-        i += 1
-      } else if (lines[i].startsWith('rateprofile')) {
-        section = 'rateprofile'
-        i += 1
-      }
-
-      matches = /Allowed (.+): (.+)/.exec(lines[i])
-      if (matches) {
-        if (matches[1] === 'values') {
-          variablesInfo[name].allowed = matches[2].split(',').map(x => x.trim())
-        } else { // 'range'
-          variablesInfo[name].range = matches[2].split(' - ').map(x => parseInt(x, 10))
-
-          if (variablesInfo[name].range.length !== 2) {
-            throw new Error('Get parse exception: invalid range length')
-          }
-        }
-      } else {
-        matches = /Array length: (.+)/.exec(lines[i])
-        if (matches) {
-          variablesInfo[name].datatype = `Array[${matches[1]}]`
-        } else {
-          // reparse entry
-          i -= 1
-        }
-
-        variablesInfo[name].section = section
-      }
-    } else {
-      throw new Error('Get parse exception on line ' + i + ': ' + lines[i])
+  for (let i = 0; i < lines.length; i++) {
+    const matches = /^([^ ]+) = (.+)$/.exec(lines[i])
+    if (!matches) {
+      console.warn(`Warning: Skipping line ${i}: ${lines[i]}`)
+      continue
     }
 
-    i += 1
+    const [, name, value] = matches
+
+    variablesInfo[name] = { default: value }
+
+    // if (value !== '-') {
+    // variablesInfo[name].default = value
+    // }
+
+    i++
+
+    let section = 'master'
+    const word = lines[i].split(' ')[0]
+    if (['profile', 'rateprofile'].includes(word)) {
+      section = word
+      i++
+    }
+
+    const parts = lines[i].split(':')
+    switch (parts[0]) {
+      case 'Allowed values':
+        variablesInfo[name].allowed = parts[1].split(',').map(x => x.trim())
+        break
+      case 'Allowed range':
+        variablesInfo[name].range = parts[1].split(' - ').map(x => parseInt(x, 10))
+        variablesInfo[name].default = parseInt(variablesInfo[name].default, 10)
+        break
+      case 'Array length':
+        variablesInfo[name].datatype = `Array[${parts[1].trim()}]`
+        break
+        // TODO: for bf 4.2 I think
+        // case 'String length':
+        //   break
+      default:
+        i--
+    }
+
+    variablesInfo[name].section = section
   }
 
   return variablesInfo
