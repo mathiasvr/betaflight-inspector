@@ -11,6 +11,7 @@ exports.annotateWithVariableDocumentation = function (vars) {
     }
   }
 
+  // TODO: move?
   // convert to array
   const cliVars = []
   for (const [key, props] of Object.entries(vars)) {

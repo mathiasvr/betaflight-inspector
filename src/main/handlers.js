@@ -12,12 +12,21 @@ exports.setupHandlers = function (config) {
     console.log('ipc arg', arg)
 
     connectToSerialPort(arg)
-      .then(vars => {
-        const cliVars = annotateWithVariableDocumentation(vars)
+      .then(cliVars => {
+        // TODO: just pass documentation dict to app instead?
+        cliVars.masterVars = annotateWithVariableDocumentation(cliVars.masterVars)
+        for (let i = 0; i < 3; i++) {
+          cliVars.profilesVars[i] = annotateWithVariableDocumentation(cliVars.profilesVars[i])
+        }
+        for (let i = 0; i < 6; i++) {
+          cliVars.rateProfilesVars[i] = annotateWithVariableDocumentation(cliVars.rateProfilesVars[i])
+        }
+
+        // console.log(cliVarsDoc)
         event.reply('received-bf-configuration', cliVars)
       })
       // TODO: better error handling
-      .catch(err => console.error('Error:', err.message))
+      // .catch(err => console.error('Error:', err.message))
   })
 
   ipc.on('list-serial-ports', (event) => {

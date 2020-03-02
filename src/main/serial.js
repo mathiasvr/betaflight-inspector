@@ -137,7 +137,11 @@ async function processData (info) {
   const get = parseGet(info.get_vars)
 
   // TODO: handle this, probably just check each get key (even though it may never happen)
-  assert.deepStrictEqual(Object.keys(defaults), Object.keys(get))
+  // assert.deepStrictEqual(
+  //   [...Object.keys(defaults.master.variables),
+  //     ...Object.keys(defaults.profiles_vars),
+  //     ...Object.keys(defaults.rateprofiles_vars)],
+  //   Object.keys(get))
 
   // TODO: currently only working with variables
   const masterVars = mergeVariableProperties(diff.master.variables, defaults.master.variables, get)
@@ -166,12 +170,14 @@ async function processData (info) {
 function mergeVariableProperties (values, defaults, ranges) {
   const vars = {}
   for (const key of Object.keys(defaults)) {
-    if (defaults[key] !== ranges[key].default) {
+    if (defaults[key] !== ranges[key].default.toString()) {
       console.warn(`Inconsistent default key: ${key} (${defaults[key]} vs ${ranges[key].default})`)
     }
 
     // TODO: default present in two places
-    vars[key] = { value: values[key] || defaults[key], default: defaults[key], ...ranges[key] }
+    // TODO: we dont need section?
+    const ranges2 = { range: ranges[key].range, allowed: ranges[key].allowed, datatype: ranges[key].datatype }
+    vars[key] = { value: values[key] || defaults[key], default: defaults[key], ...ranges2 }
   }
 
   return vars
