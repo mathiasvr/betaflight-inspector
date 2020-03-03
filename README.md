@@ -2,7 +2,9 @@
 
 A GUI for the Betaflight CLI.
 
-Early stages of development. 
+Currently focused on giving a detailed insight into the variables of your Betaflight configuration.
+
+**Status:** Early stage of development.
 
 ![Screenshot](screenshot.png)
 

@@ -7,6 +7,8 @@
   // TODO: this means variables cannot be updated by app - is this a problem?
   const bfvars = Object.assign({}, bfvariables)
 
+  // TODO: compare bfvariables and bfvars to show what has changed, and use for saving
+
   let showDefaults = true
   
   // TODO: get from bf
