@@ -1,9 +1,9 @@
 <script>
   export let variable
   // copy of variable (bound to user changes)
-  const data = Object.assign({}, variable)
+  $: data = variable
   // TODO: key may not be needed for id's
-  const key = data.name
+  $: key = data.name
 </script>
 
 <!-- TODO: fix types for comparison  -->
