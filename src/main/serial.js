@@ -144,24 +144,24 @@ async function processData (info) {
   //   Object.keys(get))
 
   // TODO: currently only working with variables
-  const masterVars = mergeVariableProperties(diff.master.variables, defaults.master.variables, get)
+  const masterVars = mergeVariableProperties(diff.variables.master, defaults.variables.master, get)
 
   const profilesVars = []
-  for (let i = 0; i < diff.profiles_vars.length; i++) {
-    profilesVars[i] = mergeVariableProperties(diff.profiles_vars[i], defaults.profiles_vars[i], get)
+  for (let i = 0; i < diff.variables.profiles.length; i++) {
+    profilesVars[i] = mergeVariableProperties(diff.variables.profiles[i], defaults.variables.profiles[i], get)
   }
 
   const rateProfilesVars = []
-  for (let i = 0; i < diff.rateprofiles_vars.length; i++) {
-    rateProfilesVars[i] = mergeVariableProperties(diff.rateprofiles_vars[i], defaults.rateprofiles_vars[i], get)
+  for (let i = 0; i < diff.variables.rateProfiles.length; i++) {
+    rateProfilesVars[i] = mergeVariableProperties(diff.variables.rateProfiles[i], defaults.variables.rateProfiles[i], get)
   }
 
   const cliVars = {
     masterVars,
     profilesVars,
     rateProfilesVars,
-    activeProfile: diff.active_prof,
-    activeRateProfile: diff.active_rateprof
+    activeProfile: diff.activeProfile,
+    activeRateProfile: diff.activeRateProfile
   }
 
   return cliVars

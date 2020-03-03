@@ -1,34 +1,31 @@
 
-// parse betaflight dump or diff
-// TODO: throws
+// Parse Betaflight CLI dump or diff output
 exports.parseDump = function (txt) {
   const lines = txt.split('\n')
 
-  const master = {
+  const config = {
     resources: [],
     features: {},
-    variables: {},
+
+    variables: {
+      master: {},
+      profiles: [{}, {}, {}],
+      rateProfiles: [{}, {}, {}, {}, {}, {}]
+    },
+    activeProfile: -1,
+    activeRateProfile: -1,
+
     globals: {}
   }
 
-  // todo: assumes dump is ordered (does nat confirm that variable belong to section)
-  const profiles_vars = [{}, {}, {}]
-  const rateprofiles_vars = [{}, {}, {}, {}, {}, {}]
-
-  // move to master?
-  let active_prof = -1
-  let active_rateprof = -1
-
   for (const line of lines) {
-    // console.log('wtf')
-    if (line === '') continue // todo?
-    if (line.startsWith('#')) continue
+    if (line === '' || line.startsWith('#')) continue
 
     const words = line.split(' ')
 
     switch (words[0]) {
       case 'resource':
-        master.resources.push(line) // todo set (dict)
+        config.resources.push(line) // todo set (dict)
         break
 
       case 'feature':
@@ -38,40 +35,42 @@ exports.parseDump = function (txt) {
           enabled = false
           name = name.substring(1)
         }
-        master.resources[name] = enabled
+        config.resources[name] = enabled
         break
       case 'profile':
-        active_prof = parseInt(words[1], 10)
+        config.activeProfile = parseInt(words[1], 10)
         break
       case 'rateprofile':
-        active_rateprof = parseInt(words[1], 10)
+        config.activeRateProfile = parseInt(words[1], 10)
         break
       case 'set':
-        // assert (words.length === 4)
-        // assert (words[2] == '=')
+        if (words.length !== 4 || words[2] !== '=') {
+          console.warn('Warning: Skipping malformed set')
+          break
+        }
 
-        var section_vars =
-            active_rateprof >= 0
-              ? rateprofiles_vars[active_rateprof]
-              : active_prof >= 0
-                ? profiles_vars[active_prof]
-                : master.variables
+        var sectionVars =
+            config.activeRateProfile >= 0
+              ? config.variables.rateProfiles[config.activeRateProfile]
+              : config.activeProfile >= 0
+                ? config.variables.profiles[config.activeProfile]
+                : config.variables.master
 
-        section_vars[words[1]] = words[3]
-
+        sectionVars[words[1]] = words[3]
         break
 
-        // todo: globals
+      // todo: globals
       case 'board_name':
       case 'manufacturer_id':
       case 'mcu_id':
       case 'signature':
-        master.globals[words[0]] = line
+        config.globals[words[0]] = line
         break
+      default:
+        if (!config.unknown) config.unknown = {}
+        config.unknown[words[0]] = line
     }
   }
 
-  master.active_profile = active_prof
-  master.active_rateprofile = active_rateprof
-  return { master, profiles_vars, rateprofiles_vars, active_prof, active_rateprof }
+  return config
 }
