@@ -25,7 +25,7 @@
     "lint": "eslint \"*/**/*.{js,svelte}\"",
     "start": "electron .",
     "test": "npm run lint",
-    "copy-vendor-res": "mkdir static/vendor; cp node_modules/bootstrap/dist/*/bootstrap.min.{css,js} static/vendor/ && cp node_modules/jquery/dist/jquery.slim.min.js static/vendor/",
+    "copy-vendor-res": "mkdir static/vendor; cp node_modules/bootstrap/dist/*/bootstrap.*min.{css,js} static/vendor/ && cp node_modules/jquery/dist/jquery.slim.min.js static/vendor/",
     "update-bf-docs": "curl -s https://raw.githubusercontent.com/mathiasvr/betaflight-deciphered/master/help_variables.json > src/doc-vars.json"
   },
   "dependencies": {
