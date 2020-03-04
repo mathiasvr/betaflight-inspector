@@ -3,6 +3,9 @@
 
   export let variables
   export let showDefaults
+
+  // TODO: jquery / popper: if needed probably call individually
+  window.$(() => window.$('[data-toggle="tooltip"]').tooltip())
 </script>
 
 {#each variables as varData}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>Betaflight Inspector (Preview)</title>
@@ -17,12 +17,6 @@
   <script defer src="vendor/bootstrap.bundle.min.js"></script>
 
   <script defer src="build/bundle.js"></script>
-
-  <script>
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
-  </script>
 
   <!-- <script defer src="https://use.fontawesome.com/releases/v5.12.1/js/all.js"></script> -->
 </head>
