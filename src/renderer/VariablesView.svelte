@@ -21,18 +21,32 @@
   $: rateVariables = bfvars.rateProfilesVars[bfvars.activeRateProfile]
 </script>
 
-<div>
-  <h1>Variables</h1>
+<!-- TODO: fix -->
+<nav id="navbar-variables" class="navbar navbar-light bg-light fixed-top">
+  <div class="navbar-brand">Variables</div>
   <div class="custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="switchDiffOnly" bind:checked={showDefaults}>
     <label class="custom-control-label" for="switchDiffOnly">Show default settings</label>
   </div>
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="#master">Master</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#profile">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#rateprofile">Rate Profile</a>
+    </li>
+  </ul>
+</nav>
 
+<div>
   <!-- TODO: avoid margin hack? -->
-  <h2 class="mt-3">Master Variables</h2>
+  <h2 id="master">Master Variables</h2>
   <VariableTable variables={masterVariables} {showDefaults} />
 
-  <h2>Profile Variables</h2>
+  <h2 id="profile">Profile Variables</h2>
   <form class="form-inline my-4">
     <label class="mr-sm-2" for="profileSelect">Profile</label>
     <select class="custom-select" id="profileSelect" bind:value={bfvars.activeProfile}>
@@ -43,7 +57,7 @@
   </form>
   <VariableTable variables={profileVariables} {showDefaults} />
 
-  <h2>Rate Profile Variables</h2>
+  <h2 id="rateprofile">Rate Profile Variables</h2>
   <form class="form-inline my-4">
     <label class="mr-sm-2" for="rateSelect">Rate profile</label>
     <select class="custom-select" id="rateSelect" bind:value={bfvars.activeRateProfile}>
@@ -54,3 +68,9 @@
   </form>
   <VariableTable variables={rateVariables} {showDefaults} />
 </div>
+
+<style>
+  h2 {
+    padding-top: 3.5rem;
+  }
+</style>

@@ -1,5 +1,9 @@
 html {
-  font-size: 87.5%;
+  font-size: 81.25%;
+}
+
+body {
+  position: relative;
 }
 
 .tooltip-inner {

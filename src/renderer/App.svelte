@@ -12,7 +12,7 @@
     .on('serial-ports-updated', (event, ports) => { portPaths = ports.map(p => p.path) })
 </script>
 
-<div class="container">
+<div class="container-fluid" >
   {#if bfvariables}
     <VariablesView {bfvariables} />
   {:else}
