@@ -1,5 +1,6 @@
 <script>
   import SvgQuestion from 'bootstrap-icons/icons/question-square-fill.svg'
+  import SvgUndo from 'bootstrap-icons/icons/arrow-counterclockwise.svg'
 
   export let variable
   // copy of variable (bound to user changes)
@@ -9,7 +10,10 @@
 </script>
 
 <!-- TODO: fix types for comparison  -->
-<div class="row {data.value.toString() !== data.default.toString() ? 'nondefault' : ''}">
+<div class="row">
+  <div class="col my-1 pr-0 text-monospace font-weight-bold" style="max-width:0;color:#0062cc;">
+    {data.value.toString() !== data.default.toString() ? '*' : ''}
+  </div>
   <div class="col-4 my-1 text-monospace text-break">{data.name}</div>
 
   <div class="col my-1">
@@ -47,13 +51,16 @@
   </div>
 
   <!-- TODO: fix buttons, don't use "close" labels, etc. -->
-  <div class="col my-1">
+  <div class="col my-1" style="color:#0062cc;">
     {#if data.desc}
     <span style="font-size:2em;line-height:0" data-toggle="tooltip" data-html="true" data-placement="left"
     title="{data.aka ? data.desc + `<br><i>BFC Name: <b>${data.aka}</b></i>` : data.desc}">
       {@html SvgQuestion}
     </span>
     {/if}
+    <a style="font-size:2em;line-height:0" href="#reset" title="Reset to default" on:click={e => (data.value = data.default)}>
+      {@html SvgUndo}
+    </a>
     <!-- <button type="button" class="" aria-label="Close" title="Reset to default value"><i class="fas fa-undo-alt" aria-hidden="true"></i></button>
     <button type="button" class="" aria-label="Close" title="Report issue"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></button>
     <button type="button" class="" aria-label="Close" title="Connect"><i class="fas fa-exchange-alt" aria-hidden="true"></i></button> -->
@@ -67,13 +74,17 @@
 
 <style>
   .row.nondefault {
-    background-color: #b5ffd4;
+    /* background-color: #b5ffd4; */
   }
   .row:nth-child(odd) {
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
   }
   .row:nth-child(odd).nondefault {
-    background-color: #7ff7b1;
+    /* background-color: #7ff7b1; */
+  }
+  .row {
+    padding: .5em 0;
+    border-top: 1px solid #e7e7e7;
   }
   .description {
     display: none;
