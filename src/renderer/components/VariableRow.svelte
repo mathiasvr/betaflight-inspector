@@ -1,4 +1,6 @@
 <script>
+  import SvgQuestion from 'bootstrap-icons/icons/question-square-fill.svg'
+
   export let variable
   // copy of variable (bound to user changes)
   $: data = variable
@@ -9,7 +11,7 @@
 <!-- TODO: fix types for comparison  -->
 <div class="row {data.value.toString() !== data.default.toString() ? 'nondefault' : ''}">
   <div class="col-4 my-1 text-monospace text-break">{data.name}</div>
-  
+
   <div class="col my-1">
     {#if data.range}
       {#if Math.abs(data.range[1] - data.range[0]) <= 10000}
@@ -43,14 +45,14 @@
     <input class="form-control" id="{key}__opt" type="text" bind:value={data.value} />
     {/if}
   </div>
-  
+
   <!-- TODO: fix buttons, don't use "close" labels, etc. -->
   <div class="col my-1">
     {#if data.desc}
-    <button type="button" class="" aria-label="Close" data-toggle="tooltip" data-html="true" data-placement="left"
-            title="{data.aka ? data.desc + `<br><i>BFC Name: <b>${data.aka}</b></i>` : data.desc}">
-      <i class="fas fa-question-circle" aria-hidden="true"></i>
-    </button>
+    <span style="font-size:2em;line-height:0" data-toggle="tooltip" data-html="true" data-placement="left"
+    title="{data.aka ? data.desc + `<br><i>BFC Name: <b>${data.aka}</b></i>` : data.desc}">
+      {@html SvgQuestion}
+    </span>
     {/if}
     <!-- <button type="button" class="" aria-label="Close" title="Reset to default value"><i class="fas fa-undo-alt" aria-hidden="true"></i></button>
     <button type="button" class="" aria-label="Close" title="Report issue"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></button>
