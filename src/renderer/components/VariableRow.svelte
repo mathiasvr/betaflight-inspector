@@ -2,6 +2,7 @@
   // import SvgInfo from 'bootstrap-icons/icons/question-square-fill.svg'
   import SvgInfo from 'bootstrap-icons/icons/info-square.svg'
   import SvgUndo from 'bootstrap-icons/icons/arrow-counterclockwise.svg'
+  import OSDPosition from './osdPosition.svelte'
 
   export let variable
   // copy of variable (bound to user changes)
@@ -28,7 +29,12 @@
           <input class="form-control" type="number" id="{key}__displ2" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
         </div>
         {#if data.unit}<i>{data.unit}</i>{/if}
-  </div>
+      </div>
+
+      {#if data.name.startsWith('osd_') && data.name.endsWith('_pos') && data.range[1] === 0x3BFF}
+        <OSDPosition value={data.value} />
+      {/if}
+
     {:else if data.allowed}
       <!-- TODO: make this type boolean before-hand for easier binding? -->
       {#if data.allowed.length === 2 && data.allowed.includes('ON') && data.allowed.includes('OFF')}
