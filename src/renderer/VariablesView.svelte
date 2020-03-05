@@ -10,7 +10,7 @@
   // TODO: compare bfvariables and bfvars to show what has changed, and use for saving
 
   let showDefaults = true
-  
+
   // TODO: get from bf
   const profiles = [1, 2, 3]
   const rateprofiles = [1, 2, 3, 4, 5, 6]
