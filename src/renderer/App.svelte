@@ -17,3 +17,17 @@
     <ConnectView {portPaths} />
   {/if}
 </div>
+
+<style>
+:global(html) {
+  font-size: 81.25%;
+}
+
+:global(body) {
+  position: relative;
+}
+
+:global(.tooltip-inner) {
+  max-width: 400px;
+}
+</style>
