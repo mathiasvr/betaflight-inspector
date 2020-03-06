@@ -9,7 +9,7 @@
 
   // TODO: compare bfvariables and bfvars to show what has changed, and use for saving
 
-  let showDefaults = true
+  let hideDefaults = true
 
   // TODO: get from bf
   const profiles = [1, 2, 3]
@@ -25,8 +25,8 @@
 <nav id="navbar-variables" class="navbar navbar-light bg-light fixed-top">
   <div class="navbar-brand">Variables</div>
   <div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="switchDiffOnly" bind:checked={showDefaults}>
-    <label class="custom-control-label" for="switchDiffOnly">Show default settings</label>
+    <input type="checkbox" class="custom-control-input" id="switchDiffOnly" bind:checked={hideDefaults}>
+    <label class="custom-control-label" for="switchDiffOnly">Hide defaults</label>
   </div>
   <ul class="nav nav-pills">
     <li class="nav-item">
@@ -44,7 +44,7 @@
 <div>
   <!-- TODO: avoid margin hack? -->
   <h2 id="master">Master Variables</h2>
-  <VariableTable variables={masterVariables} {showDefaults} />
+  <VariableTable variables={masterVariables} {hideDefaults} />
 
   <h2 id="profile">Profile Variables</h2>
   <form class="form-inline my-4">
@@ -55,7 +55,7 @@
       {/each}
     </select>
   </form>
-  <VariableTable variables={profileVariables} {showDefaults} />
+  <VariableTable variables={profileVariables} {hideDefaults} />
 
   <h2 id="rateprofile">Rate Profile Variables</h2>
   <form class="form-inline my-4">
@@ -66,7 +66,7 @@
       {/each}
     </select>
   </form>
-  <VariableTable variables={rateVariables} {showDefaults} />
+  <VariableTable variables={rateVariables} {hideDefaults} />
 </div>
 
 <style>
