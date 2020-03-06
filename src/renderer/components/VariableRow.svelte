@@ -18,22 +18,33 @@
   </div>
   <div class="col-4 my-1 text-monospace text-break">{data.name}</div>
 
-  <div class="col my-1">
+  <div class="col-5 my-1">
     {#if data.range}
-      {#if Math.abs(data.range[1] - data.range[0]) <= 10000}
-      <input class="custom-range" id="{key}__opt" type="range" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
-      {/if}
-        <!--output id="{key}__displ">{data.value}</output-->
       <div class="form-row align-items-center">
+        {#if Math.abs(data.range[1] - data.range[0]) <= 10000}
         <div class="col">
-          <input class="form-control" type="number" id="{key}__displ2" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
+          <input class="custom-range" id="{key}__opt" type="range" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
         </div>
-        {#if data.unit}<i>{data.unit}</i>{/if}
-      </div>
+        {/if}
+        
+        <div class="col-sm-auto">
+          <!-- TODO: should this only be -sm when there is range slider? -->
+          <div class="input-group input-group-sm">
+            <input class="form-control" type="number" id="{key}__displ2" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
+            {#if data.unit}
+            <div class="input-group-append">
+              <span class="input-group-text">{data.unit}</span>
+            </div>
+            {/if}
+          </div>
+        </div>
 
-      {#if data.name.startsWith('osd_') && data.name.endsWith('_pos') && data.range[1] === 0x3BFF}
-        <OSDPosition value={data.value} />
-      {/if}
+        {#if data.name.startsWith('osd_') && data.name.endsWith('_pos') && data.range[1] === 0x3BFF}
+        <div class="col">
+          <OSDPosition value={data.value} />
+        </div>
+        {/if}
+      </div>
 
     {:else if data.allowed}
       <!-- TODO: make this type boolean before-hand for easier binding? -->
@@ -83,15 +94,6 @@
 </div>
 
 <style>
-  .row.nondefault {
-    /* background-color: #b5ffd4; */
-  }
-  .row:nth-child(odd) {
-    /* background-color: #f4f4f4; */
-  }
-  .row:nth-child(odd).nondefault {
-    /* background-color: #7ff7b1; */
-  }
   .row {
     padding: .5em 0;
     border-top: 1px solid #e7e7e7;
