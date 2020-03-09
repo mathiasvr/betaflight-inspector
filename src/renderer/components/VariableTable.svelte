@@ -5,7 +5,7 @@
   export let hideDefaults
 
   // TODO: jquery / popper: if needed probably call individually
-  window.$(() => window.$('[data-toggle="tooltip"]').tooltip())
+  // window.$(() => window.$('[data-toggle="tooltip"]').tooltip())
 </script>
 
 {#each variables as varData}

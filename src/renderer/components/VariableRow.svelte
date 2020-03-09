@@ -1,4 +1,5 @@
 <script>
+  import { slide } from 'svelte/transition'
   // import SvgInfo from 'bootstrap-icons/icons/question-square-fill.svg'
   import SvgInfo from 'bootstrap-icons/icons/info-square.svg'
   import SvgUndo from 'bootstrap-icons/icons/arrow-counterclockwise.svg'
@@ -9,6 +10,8 @@
   $: data = variable
   // TODO: key may not be needed for id's
   $: key = data.name
+
+  let showHelp = false
 </script>
 
 <!-- TODO: fix types for comparison  -->
@@ -77,19 +80,24 @@
     {/if}
     
     {#if data.desc}
-    <span style="font-size:2em;line-height:0" data-toggle="tooltip" data-html="true" data-placement="left"
+    <!-- <a href="#_" style="font-size:2em;line-height:0" data-toggle="tooltip" data-html="true" data-placement="left"
     title="{data.aka ? data.desc + `<br><i>BFC Name: <b>${data.aka}</b></i>` : data.desc}">
       {@html SvgInfo}
-    </span>
+    </a> -->
+    <a href="#_" style="font-size:2em;line-height:0" title="Toggle help info" on:click={() => { showHelp = !showHelp }}>
+      {@html SvgInfo}
+    </a>
     {/if}
     <!-- <button type="button" class="" aria-label="Close" title="Reset to default value"><i class="fas fa-undo-alt" aria-hidden="true"></i></button>
     <button type="button" class="" aria-label="Close" title="Report issue"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></button>
     <button type="button" class="" aria-label="Close" title="Connect"><i class="fas fa-exchange-alt" aria-hidden="true"></i></button> -->
   </div>
 
-  <div class="description col-12 font-weight-light">
-  {#if data.desc}{data.desc}{/if}
+  {#if data.desc && showHelp}
+  <div class="col-9 ml-4 pl-3 font-weight-light" transition:slide="{{ duration: 150 }}">
+    {data.desc}
   </div>
+  {/if}
 
 </div>
 
@@ -97,8 +105,5 @@
   .row {
     padding: .5em 0;
     border-top: 1px solid #e7e7e7;
-  }
-  .description {
-    display: none;
   }
 </style>
