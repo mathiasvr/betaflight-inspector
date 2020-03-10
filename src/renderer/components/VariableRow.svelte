@@ -15,8 +15,9 @@
   let showHelp = false
 </script>
 
+<!-- TODO: fix hash scroll position -->
+<div class="row" id="{data.name}">
 <!-- TODO: fix types for comparison  -->
-<div class="row">
   <div class="col my-1 pr-0 text-monospace font-weight-bold" style="max-width:0;color:#0062cc;">
     {data.value.toString() !== data.default.toString() ? '*' : ''}
   </div>
