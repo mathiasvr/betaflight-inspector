@@ -1,5 +1,6 @@
 <script>
   import { slide } from 'svelte/transition'
+  import marked from 'marked'
   // import SvgInfo from 'bootstrap-icons/icons/question-square-fill.svg'
   import SvgInfo from 'bootstrap-icons/icons/info-square.svg'
   import SvgUndo from 'bootstrap-icons/icons/arrow-counterclockwise.svg'
@@ -95,7 +96,8 @@
 
   {#if data.desc && showHelp}
   <div class="col-9 ml-4 pl-3 font-weight-light" transition:slide="{{ duration: 150 }}">
-    {data.desc}
+    <!-- TODO: preprocess markdown -->
+    {@html marked(data.desc.replace(/(?<!\]\()#([\w_]+)/, '[$1](#$1)'))}
   </div>
   {/if}
 

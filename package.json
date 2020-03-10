@@ -30,6 +30,7 @@
     "update-bf-docs": "curl -s https://raw.githubusercontent.com/mathiasvr/betaflight-deciphered/master/help_variables.json > src/doc-vars.json"
   },
   "dependencies": {
+    "marked": "^0.8.0",
     "serialport": "^8.0.7",
     "usb": "^1.6.2"
   },
