@@ -174,10 +174,14 @@ function mergeVariableProperties (values, defaults, ranges) {
       console.warn(`Inconsistent default key: ${key} (${defaults[key]} vs ${ranges[key].default})`)
     }
 
-    // TODO: default present in two places
-    // TODO: we dont need section?
-    const ranges2 = { range: ranges[key].range, allowed: ranges[key].allowed, datatype: ranges[key].datatype }
-    vars[key] = { value: values[key] || defaults[key], default: defaults[key], ...ranges2 }
+    // TODO: Can more keys be used?
+    vars[key] = {
+      value: values[key] || defaults[key],
+      default: defaults[key],
+      range: ranges[key].range,
+      allowed: ranges[key].allowed,
+      datatype: ranges[key].datatype
+    }
   }
 
   return vars

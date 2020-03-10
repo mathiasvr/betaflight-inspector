@@ -9,8 +9,7 @@
 </script>
 
 {#each variables as varData}
-  <!-- TODO: fix types for comparison -->
-  {#if !hideDefaults || varData.value.toString() !== varData.default.toString()}
+  {#if !hideDefaults || varData.value !== varData.default}
   <VariableRow variable={varData} />
   {/if}
 {/each}
