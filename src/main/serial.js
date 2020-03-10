@@ -13,7 +13,6 @@ exports.connectToSerialPort = function (portPath) {
       , err => {
         if (err) return console.error('could not open:', err.message)
 
-        // whenReady()
         portWriteAndCheck('#')
       })
 
@@ -38,7 +37,7 @@ exports.connectToSerialPort = function (portPath) {
     setTimeout(() => stage === 0 && exitAndClose(), 1000)
     setTimeout(() => exitAndClose(), 5000)
 
-    // todo: do we need this / does it throw other errors (not already handled)
+    // TODO: do we need this / does it throw other errors (not already handled)
     // Open errors will be emitted as an error event
     // port.on("error", function (err) {
     //   console.error("Error: ", err.message);
@@ -110,13 +109,13 @@ exports.connectToSerialPort = function (portPath) {
           if (line === '# get') {
             stage++
             // HACK: send unique string (unknown command) in order to locate end of response
-            portWriteAndCheck('abcde12345\n')
+            portWriteAndCheck('abc123\n')
           } else {
             info.default_dump += line + '\n'
           }
           break
         case 7:
-          if (line === '# abcde12345') {
+          if (line === '# abc123') {
             stage++
             portWriteAndCheck('exit\n')
             port.close()
@@ -131,17 +130,16 @@ exports.connectToSerialPort = function (portPath) {
 }
 
 async function processData (info) {
-  // TODO: possible exceptions all over the place
   const diff = parseDump(info.diff)
   const defaults = parseDump(info.default_dump)
   const get = parseGet(info.get_vars)
 
-  // TODO: handle this, probably just check each get key (even though it may never happen)
-  // assert.deepStrictEqual(
-  //   [...Object.keys(defaults.master.variables),
-  //     ...Object.keys(defaults.profiles_vars),
-  //     ...Object.keys(defaults.rateprofiles_vars)],
-  //   Object.keys(get))
+  // TODO: handle this? - in production?
+  assert.deepStrictEqual(
+    [...Object.keys(defaults.variables.master),
+      ...Object.keys(defaults.variables.profiles[0]),
+      ...Object.keys(defaults.variables.rateProfiles[0])].sort(),
+    Object.keys(get).sort())
 
   // TODO: currently only working with variables
   const masterVars = mergeVariableProperties(diff.variables.master, defaults.variables.master, get)

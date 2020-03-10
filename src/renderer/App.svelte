@@ -2,8 +2,9 @@
   import ConnectView from './ConnectView.svelte'
   import VariablesView from './VariablesView.svelte'
 
+  // import bfvariablesmock from './._bfvars-mock.json'
+  let bfvariables //= bfvariablesmock
   let portPaths = []
-  let bfvariables = null
 
   window.ipc
     .on('received-bf-configuration', (event, bfvars) => { bfvariables = bfvars })
