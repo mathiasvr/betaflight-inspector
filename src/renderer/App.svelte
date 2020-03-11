@@ -13,7 +13,7 @@
 
 <div class="container-fluid">
   {#if bfvariables}
-    <VariablesView {bfvariables} />
+    <VariablesView bind:bfvariables={bfvariables} />
   {:else}
     <ConnectView {portPaths} />
   {/if}

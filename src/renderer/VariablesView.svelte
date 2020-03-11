@@ -50,6 +50,9 @@
     <br>
     <b>MCU ID:</b> {bfvars.diff.globals.mcu_id}
   </div>
+  <div class="mt-3">
+    <button class="btn btn-danger" type="button" on:click={() => { bfvariables = null }}>Exit</button>
+  </div>
 
   <!-- TODO: avoid margin hack? -->
   <h2 id="master">Master Variables</h2>
