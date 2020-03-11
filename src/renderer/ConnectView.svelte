@@ -1,6 +1,9 @@
 <script>
   export let portPaths
 
+  let connecting = false
+  let lastErrorMsg
+
   // HACK: Svelte binding doesn't work when updating select options.
   //       https://github.com/sveltejs/svelte/issues/1764
   let selectedPortPath_does_not_work
@@ -8,6 +11,7 @@
     document.getElementById('selectPort').value
 
   function handleClick (event) {
+    connecting = true
     const portPath = selectedPortPath()
     console.log('selected port?:', selectedPortPath_does_not_work)
     console.log('selected port:', portPath)
@@ -18,6 +22,11 @@
 
   // TODO: establish IPC naming convention
   window.ipc.send('list-serial-ports')
+
+  window.ipc.on('connection-error', (event, err) => {
+    connecting = false
+    lastErrorMsg = err.message
+  })
 </script>
 
 <div>
@@ -40,9 +49,20 @@
       <label class="custom-control-label" for="customControlInline">Remember my preference</label>
     </div> -->
 
-    <button type="button" class="btn btn-primary" on:click={handleClick}>
+    <button class="btn btn-primary" type="button" on:click={handleClick} disabled={connecting}>
+      {#if connecting}
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Connecting...
+      {:else}
       Connect
+      {/if}
     </button>
   </form>
+
+  {#if lastErrorMsg}
+  <div class="alert alert-danger" role="alert">
+    <b>Connection error:</b> {lastErrorMsg}
+  </div>
+  {/if}
 
 </div>

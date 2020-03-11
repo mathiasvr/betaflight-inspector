@@ -33,7 +33,6 @@ exports.connectToSerialPort = function (portPath) {
       }
     }
 
-    // TODO: notify renderer of timeout
     setTimeout(() => stage === 0 && exitAndClose(), 1000)
     setTimeout(() => exitAndClose(), 5000)
 

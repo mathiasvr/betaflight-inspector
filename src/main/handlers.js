@@ -26,7 +26,11 @@ exports.setupHandlers = function (config) {
         event.reply('received-bf-configuration', cliVars)
       })
       // TODO: better error handling
-      // .catch(err => console.error('Error:', err.message))
+      .catch(err => {
+        // console.error('Error:', err.message))
+        event.reply('connection-error', err)
+        throw err
+      })
   })
 
   ipc.on('list-serial-ports', (event) => {
