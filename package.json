@@ -21,7 +21,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "install": "electron-rebuild && npm run copy-vendor-res",
+    "install": "electron-rebuild",
     "lint": "eslint \"*/**/*.{js,svelte}\" && npm run lintspaces",
     "lintspaces": "lintspaces -n -t -l 1 -d spaces -s 2 --endofline lf *.{js,json} static/index.html src/* src/**/*",
     "start": "electron .",
@@ -35,6 +35,8 @@
     }
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
     "marked": "^0.8.0",
     "serialport": "^8.0.7",
     "usb": "^1.6.2"
@@ -43,7 +45,6 @@
     "@rollup/plugin-commonjs": "^11.0.0",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.0.0",
-    "bootstrap": "^4.4.1",
     "bootstrap-icons": "^1.0.0-alpha2",
     "electron": "^8.0.2",
     "electron-rebuild": "^1.10.0",
@@ -56,7 +57,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-svelte3": "^2.7.3",
     "husky": "^4.2.3",
-    "jquery": "^3.4.1",
     "lintspaces-cli": "github:mathiasvr/lintspaces-cli#patch-1",
     "rollup": "^1.20.0",
     "rollup-plugin-svelte": "^5.1.0",
