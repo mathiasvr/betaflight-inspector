@@ -42,6 +42,15 @@
 </nav>
 
 <div>
+  <!-- TODO: fix style and move to main view -->
+  <h2 class="mb-0">Betaflight {bfvars.version.num}</h2>
+  <p class="text-muted">{bfvars.version.str}</p>
+  <div>
+    <b>Board:</b> {bfvars.diff.globals.board_name}
+    <br>
+    <b>MCU ID:</b> {bfvars.diff.globals.mcu_id}
+  </div>
+
   <!-- TODO: avoid margin hack? -->
   <h2 id="master">Master Variables</h2>
   <VariableTable variables={masterVariables} {hideDefaults} />

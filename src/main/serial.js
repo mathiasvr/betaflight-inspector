@@ -71,9 +71,9 @@ exports.connectToSerialPort = function (portPath) {
           }
           break
         case 2:
-          info.versionString = line
           var m = line.match(/# Betaflight.+?(\d\.\d\.\d)/)
           if (m) info.versionNumber = m[1]
+          info.versionString = line.replace(/^# /, '')
 
           if (m && info.versionNumber.substring(0, 3) === '4.1') {
             stage++
@@ -158,7 +158,10 @@ async function processData (info) {
     profilesVars,
     rateProfilesVars,
     activeProfile: diff.activeProfile,
-    activeRateProfile: diff.activeRateProfile
+    activeRateProfile: diff.activeRateProfile,
+    // TODO: for dev purposes - restructure
+    version: { str: info.versionString, num: info.versionNumber },
+    diff: diff
   }
 
   return cliVars

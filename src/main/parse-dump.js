@@ -64,7 +64,7 @@ exports.parseDump = function (txt) {
       case 'manufacturer_id':
       case 'mcu_id':
       case 'signature':
-        config.globals[words[0]] = line
+        config.globals[words[0]] = line.substring(words[0].length + 1)
         break
       default:
         if (!config.unknown) config.unknown = {}
