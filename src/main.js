@@ -50,5 +50,13 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
+// Block all navigation and open URL in external browser instead.
+app.on('web-contents-created', (event, contents) => {
+  contents.on('will-navigate', (event, navigationUrl) => {
+    event.preventDefault()
+    require('open')(navigationUrl)
+  })
+})
+
 // Setup handlers for serial and IPC communication
 setupHandlers(config)
