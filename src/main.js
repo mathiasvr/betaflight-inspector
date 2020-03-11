@@ -1,4 +1,3 @@
-// Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
@@ -16,7 +15,6 @@ if (DEBUG) {
 }
 
 function createWindow () {
-  // Create the browser window.
   const win = config.mainWindow = new BrowserWindow({
     width: DEBUG ? 1200 : 800,
     height: 700,
@@ -25,7 +23,6 @@ function createWindow () {
     }
   })
 
-  // and load the index.html of the app.
   win.loadFile('static/index.html')
 
   // Open the Developer Tools in debug mode
@@ -37,20 +34,17 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 
-// Quit when all windows are closed.
+// Quit when all windows are closed, except on macOS
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
+  // Re-create window if necessary when the dock icon is clicked
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
-// Block all navigation and open URL in external browser instead.
+// Block all navigation and open URL in external browser instead
 app.on('web-contents-created', (event, contents) => {
   contents.on('will-navigate', (event, navigationUrl) => {
     event.preventDefault()
