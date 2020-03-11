@@ -1,4 +1,6 @@
 <script>
+  import SvgConnect from 'bootstrap-icons/icons/arrow-left-right.svg'
+
   export let portPaths
 
   let connecting = false
@@ -30,39 +32,55 @@
 </script>
 
 <div>
-  <h1>Connect Flight Controller</h1>
 
-  <form class="form-inline my-4">
-    <label class="mr-sm-2" for="selectPort">Serial port</label>
-    <select
-      class="custom-select mr-sm-2"
-      id="selectPort"
-      size="3"
-      bind:value={selectedPortPath_does_not_work}>
-      {#each portPaths as port, i}
-        <option value={port} selected={i === 0}>{port}</option>
-      {/each}
-    </select>
+  <form class="form-connect">
 
-    <!-- <div class="custom-control custom-checkbox my-1 mr-2">
-      <input type="checkbox" class="custom-control-input" id="customControlInline">
-      <label class="custom-control-label" for="customControlInline">Remember my preference</label>
-    </div> -->
+    <div class="form-group text-center">
+      <div class="mb-3" style="font-size:4rem;">{@html SvgConnect}</div>
+      <h1 class="h3 font-weight-normal">Connect Flight Controller</h1>
+    </div>
 
-    <button class="btn btn-primary" type="button" on:click={handleClick} disabled={connecting}>
+    <div class="form-group">
+      <label class="" for="selectPort">Serial port</label>
+      <select
+        class="custom-select custom-select-lg"
+        id="selectPort"
+        size="3"
+        bind:value={selectedPortPath_does_not_work}>
+        {#each portPaths as port, i}
+          <option value={port} selected={i === 0}>{port}</option>
+        {/each}
+      </select>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="button" on:click={handleClick} disabled={connecting}>
       {#if connecting}
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Connecting...
       {:else}
       Connect
       {/if}
     </button>
+
+    <div class="mt-5 text-center">
+      {#if connecting}
+      <div class="spinner-border text-primary" role="status" style="width: 2rem; height: 2rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+      {:else if lastErrorMsg}
+      <div class="alert alert-danger" role="alert">
+        <b>Connection error:</b> {lastErrorMsg}
+      </div>
+      {/if}
+    </div>
+
   </form>
 
-  {#if lastErrorMsg}
-  <div class="alert alert-danger" role="alert">
-    <b>Connection error:</b> {lastErrorMsg}
-  </div>
-  {/if}
-
 </div>
+
+<style>
+  .form-connect {
+    max-width: 350px;
+    padding: 40px 15px;
+    margin: auto;
+  }
+</style>
