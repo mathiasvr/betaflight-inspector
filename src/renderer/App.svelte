@@ -2,8 +2,7 @@
   import ConnectView from './ConnectView.svelte'
   import VariablesView from './VariablesView.svelte'
 
-  // import bfvariablesmock from './._bfvars-mock.json'
-  let bfvariables //= bfvariablesmock
+  let bfvariables
   let portPaths = []
 
   window.ipc

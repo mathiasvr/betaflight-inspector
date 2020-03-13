@@ -14,12 +14,17 @@
 
 <!-- TODO: fix hash scroll position -->
 <div class="row" id="{data.name}">
-  <div class="col my-1 pr-0 text-monospace font-weight-bold" style="max-width:0;color:#0062cc;">
+  <div class="col pr-0 text-monospace font-weight-bold" style="max-width:0;color:#0062cc;">
     {data.value !== data.default ? '*' : ''}
   </div>
-  <div class="col-4 my-1 text-monospace text-break">{data.name}</div>
+  <div class="col-4">
+    <div class="text-monospace text-break">{data.name}</div>
+    {#if data.title}
+    <div class="text-muted" style="font-size:0.9rem">{data.title}</div>
+    {/if}
+  </div>
 
-  <div class="col-5 my-1">
+  <div class="col-5">
     {#if data.range}
       <div class="form-row align-items-center">
         {#if Math.abs(data.range[1] - data.range[0]) <= 10000}
@@ -27,7 +32,7 @@
           <input class="custom-range" type="range" min={data.range[0]} max={data.range[1]} bind:value={data.value}/>
         </div>
         {/if}
-        
+
         <div class="col-sm-auto">
           <!-- TODO: should this only be -sm when there is range slider? -->
           <div class="input-group input-group-sm">
@@ -68,13 +73,13 @@
     {/if}
   </div>
 
-  <div class="col my-1" style="color:#0062cc;">
+  <div class="col" style="color:#0062cc;">
     {#if data.value.toString() !== data.default.toString()}
     <a style="font-size:2em;line-height:0" href="#reset" title="Reset to default" on:click={e => (data.value = data.default)}>
       {@html SvgUndo}
     </a>
     {/if}
-    
+
     {#if data.desc}
     <!-- <a href="#_" style="font-size:2em;line-height:0" data-toggle="tooltip" data-html="true" data-placement="left"
     title="{data.aka ? data.desc + `<br><i>BFC Name: <b>${data.aka}</b></i>` : data.desc}">
@@ -87,9 +92,9 @@
   </div>
 
   {#if data.desc && showHelp}
-  <div class="col-9 ml-4 pl-3 font-weight-light" transition:slide="{{ duration: 150 }}">
+  <div class="col-9 my-2 font-weight-light" style="padding-left: 2.3rem" transition:slide="{{ duration: 150 }}">
     <!-- TODO: preprocess markdown -->
-    {@html marked(data.desc.replace(/(?<!\]\()#([\w_]+)/, '[$1](#$1)'))}
+    {@html marked(data.desc.replace(/(?<!\]\()#([\w_]+)/, '[$1](#$1)')).slice(3, -5)}
   </div>
   {/if}
 
