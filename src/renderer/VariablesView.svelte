@@ -48,7 +48,7 @@
   <div>
     <b>Board:</b> {bfvars.diff.globals.board_name}
     <br>
-    <b>MCU ID:</b> {bfvars.diff.globals.mcu_id}
+    <b>Identifier:</b> {bfvars.diff.globals.mcu_id}
   </div>
   <div class="mt-3">
     <button class="btn btn-danger" type="button" on:click={() => { bfvariables = null }}>Exit</button>

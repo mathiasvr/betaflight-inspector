@@ -10,6 +10,8 @@
   $: data = variable
 
   let showHelp = false
+
+  const isPosition = (data) => data.name.startsWith('osd_') && data.name.endsWith('_pos') && data.range[1] === 0x3BFF
 </script>
 
 <!-- TODO: fix hash scroll position -->
@@ -45,7 +47,7 @@
           </div>
         </div>
 
-        {#if data.name.startsWith('osd_') && data.name.endsWith('_pos') && data.range[1] === 0x3BFF}
+        {#if isPosition(data)}
         <div class="col">
           <OSDPosition value={data.value} />
         </div>
