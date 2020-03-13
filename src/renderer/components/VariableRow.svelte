@@ -49,7 +49,7 @@
 
         {#if isPosition(data)}
         <div class="col">
-          <OSDPosition value={data.value} />
+          <OSDPosition bind:value={data.value} />
         </div>
         {/if}
       </div>
@@ -76,7 +76,7 @@
   </div>
 
   <div class="col" style="color:#0062cc;">
-    {#if data.value.toString() !== data.default.toString()}
+    {#if data.value !== data.default}
     <a style="font-size:2em;line-height:0" href="#reset" title="Reset to default" on:click={e => (data.value = data.default)}>
       {@html SvgUndo}
     </a>
