@@ -56,8 +56,8 @@
       <!-- TODO: make this type boolean before-hand for easier binding? -->
       {#if data.allowed.length === 2 && data.allowed.includes('ON') && data.allowed.includes('OFF')}
       <div class="custom-control custom-switch">
-        <input class="custom-control-input" id="{data.name}_switch" type="checkbox" checked={data.value === 'ON'} on:change={data.value = this.checked ? 'ON' : 'OFF' } />
-        <label class="custom-control-label" for="{data.name}_switch"></label>
+        <input class="custom-control-input" id="switch_{data.name}" type="checkbox" checked={data.value === 'ON'} on:change={(v => { data.value = v })(this.checked ? 'ON' : 'OFF')} />
+        <label class="custom-control-label" for="switch_{data.name}"></label>
       </div>
       {:else}
       <select class="custom-select custom-select-sm" bind:value={data.value}>
