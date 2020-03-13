@@ -22,8 +22,9 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "install": "electron-rebuild",
-    "lint": "eslint \"*/**/*.{js,svelte}\" && npm run lintspaces",
-    "lintspaces": "lintspaces -n -t -l 1 -d spaces -s 2 --endofline lf *.{js,json} static/index.html src/* src/**/*",
+    "lint": "npm run lintjs && npm run lintspaces",
+    "lintjs": "eslint \"**/*.{js,svelte}\"",
+    "lintspaces": "lintspaces -n -t -l 1 -d spaces -s 2 --endofline lf \"*.{js,json,md}\" \"static/*\" \"src/**/*\"",
     "start": "electron .",
     "test": "npm run lint",
     "copy-vendor-res": "mkdir static/vendor; cp node_modules/bootstrap/dist/*/bootstrap.*min.{css,js} static/vendor/ && cp node_modules/jquery/dist/jquery.slim.min.js static/vendor/",
@@ -31,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm run lint"
     }
   },
   "dependencies": {
