@@ -38,7 +38,7 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "jquery": "^3.5.0",
-    "marked": "^0.8.0",
+    "marked": "^4.0.10",
     "open": "^7.0.3",
     "serialport": "^8.0.7",
     "usb": "^1.6.2"
